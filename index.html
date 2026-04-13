@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aswin K R</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#111;--bg2:#1a1a1a;--bg3:#222;
+  --ink:#f0f0f0;--ink2:#a8a8a8;--ink3:#555;
+  --accent:#e8e0d0;--accent2:#c4a882;
+  --rule:rgba(255,255,255,0.07);--rule2:rgba(255,255,255,0.14);
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
+  font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased;
+}
+nav{
+  max-width:680px;margin:0 auto;padding:2rem 1.5rem 0;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.logo{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:14px;font-weight:500;color:var(--accent);cursor:pointer;flex-shrink:0;}
+.nav-links{list-style:none;display:flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;}
+.nav-links a{font-size:12px;color:var(--ink3);text-decoration:none;cursor:pointer;padding:3px 9px;border-radius:20px;transition:color 0.15s,background 0.15s;}
+.nav-links a:hover,.nav-links a.act{color:var(--ink);background:var(--bg3);}
+main{max-width:680px;margin:0 auto;padding:0 1.5rem 6rem;}
+section{display:none;padding-top:3rem;}
+section.active{display:block;}
+h1{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:2rem;font-weight:500;color:var(--ink);letter-spacing:-0.02em;line-height:1.15;margin-bottom:0.15rem;}
+h2{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:1.3rem;font-weight:500;color:var(--ink);letter-spacing:-0.01em;margin-bottom:1.5rem;}
+p{color:var(--ink2);margin-bottom:1rem;font-weight:300;font-size:15.5px;}
+p:last-child{margin-bottom:0;}
+em{color:var(--accent);font-style:italic;}
+hr{border:none;border-top:1px solid var(--rule);margin:1.8rem 0;}
+a{color:var(--accent2);text-decoration:none;transition:color 0.15s;}
+a:hover{color:var(--ink);}
+.label{font-size:10.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;font-weight:500;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--accent2);flex-shrink:0;display:inline-block;}
+/* HERO */
+.hero-tagline{font-size:14px;color:var(--ink3);font-weight:300;margin-bottom:1.5rem;}
+.hero-photo{width:100%;border-radius:10px;overflow:hidden;margin-bottom:1.6rem;background:var(--bg2);aspect-ratio:4/3;}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.2rem;margin-bottom:0.7rem;transition:border-color 0.15s;}
+.card:hover{border-color:var(--rule2);}
+.c-title{font-size:14.5px;color:var(--ink);font-weight:400;line-height:1.35;margin-bottom:2px;}
+.c-sub{font-size:12.5px;color:var(--ink3);font-weight:300;}
+.c-note{font-size:13px;color:var(--ink3);margin-top:6px;line-height:1.6;font-weight:300;}
+.c-row{display:flex;gap:0.8rem;align-items:flex-start;}
+.spine{width:3px;border-radius:2px;background:var(--accent2);align-self:stretch;min-height:34px;flex-shrink:0;}
+.progress{font-size:11.5px;color:var(--accent2);margin-top:5px;font-weight:400;}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid var(--rule2);color:var(--ink3);margin-right:4px;margin-top:4px;letter-spacing:0.04em;}
+.tag.p{color:#c4a882;border-color:rgba(196,168,130,0.3);}
+.tag.pr{color:#82b4c4;border-color:rgba(130,180,196,0.3);}
+/* WRITING */
+.wlist{list-style:none;}
+.wlist li{padding:0.75rem 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.wlist li:first-child{border-top:1px solid var(--rule);}
+.w-wrap{flex:1;}
+.w-title{font-size:14.5px;color:var(--ink);line-height:1.4;font-weight:400;cursor:pointer;transition:color 0.15s;}
+.w-title:hover{color:var(--accent2);}
+.w-desc{font-size:12px;color:var(--ink3);margin-top:2px;font-weight:300;line-height:1.5;}
+.w-date{font-size:11.5px;color:var(--ink3);white-space:nowrap;flex-shrink:0;font-weight:300;padding-top:3px;}
+/* QUOTES */
+.q-item{padding:1rem 0;border-bottom:1px solid var(--rule);}
+.q-item:first-child{border-top:1px solid var(--rule);}
+.q-text{font-size:15.5px;color:var(--ink);font-style:italic;font-weight:300;line-height:1.6;margin-bottom:0.3rem;}
+.q-attr{font-size:11.5px;color:var(--ink3);letter-spacing:0.05em;}
+/* BOOKS */
+.bentry{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:0.4rem 1rem;align-items:start;}
+.bentry:first-of-type{border-top:1px solid var(--rule);}
+.b-title{font-size:14.5px;color:var(--ink);font-style:italic;line-height:1.35;font-weight:400;}
+.b-author{font-size:12px;color:var(--ink3);margin-top:2px;font-weight:300;}
+.b-note{font-size:13px;color:var(--ink3);margin-top:5px;line-height:1.6;grid-column:1/-1;font-weight:300;}
+.b-stars{font-size:11px;color:var(--accent2);white-space:nowrap;padding-top:3px;}
+.b-cat{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-top:3px;display:block;grid-column:1/-1;font-weight:400;}
+/* GARDEN */
+.gnote{padding:1.1rem 0;border-bottom:1px solid var(--rule);}
+.gnote:first-of-type{border-top:1px solid var(--rule);}
+.g-dom{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.3rem;font-weight:500;}
+.g-title{font-size:15px;color:var(--ink);line-height:1.4;margin-bottom:0.3rem;font-weight:400;}
+.g-body{font-size:13.5px;color:var(--ink3);line-height:1.65;font-weight:300;}
+/* NOW */
+.nsec{margin-bottom:1.8rem;}
+.nsec h3{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.5rem;font-weight:500;}
+/* ABOUT */
+.jblock{margin-bottom:1.8rem;}
+.jyear{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);font-weight:500;margin-bottom:0.4rem;display:block;}
+.jblock p{font-size:15px;color:var(--ink2);font-weight:300;line-height:1.8;}
+.social-row{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.social-row a{font-size:13px;color:var(--ink3);font-weight:300;transition:color 0.15s;}
+.social-row a:hover{color:var(--ink);}
+.loading{font-size:13px;color:var(--ink3);padding:0.5rem 0;font-weight:300;}
+blockquote{border-left:2px solid var(--rule2);padding:0.3rem 0 0.3rem 1rem;margin:1.5rem 0;font-style:italic;color:var(--ink3);font-size:14.5px;font-weight:300;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo" onclick="show('home')">Aswin K R</span>
+  <ul class="nav-links">
+    <li><a onclick="show('home')" id="t-home">Home</a></li>
+    <li><a onclick="show('writing')" id="t-writing">Writing</a></li>
+    <li><a onclick="show('projects')" id="t-projects">Projects</a></li>
+    <li><a onclick="show('garden')" id="t-garden">Garden</a></li>
+    <li><a onclick="show('books')" id="t-books">Books</a></li>
+    <li><a onclick="show('quotes')" id="t-quotes">Quotes</a></li>
+    <li><a onclick="show('now')" id="t-now">Now</a></li>
+    <li><a onclick="show('about')" id="t-about">About</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <h1>Aswin K R</h1>
+  <p class="hero-tagline">a 33 year old, still trying to figure out life and purpose</p>
+
+  <div class="hero-photo">
+    <!-- REPLACE src below with your hosted photo URL, e.g. src="https://yoursite.com/photo.jpg" -->
+    <img src="https://drive.google.com/uc?export=viewYOUR_PHOTO_URL_HEREid=149JRi4b950xSAUrUNk-oZ0VXklGvI8SY" alt="Aswin K R"
+      onerror="this.parentElement.style.background='#1a1a1a';this.style.display='none'" />
+  </div>
+
+  <p>I was one of the early people at <a href="https://entri.app" target="_blank">Entri</a> — joined when it was still figuring out what it was, stayed through the years when that question got answered at scale. The work across that arc has been cross-functional: strategy, marketing, business, operations and product. The kind of role that doesn't have a clean title because it wasn't that kind of journey. Currently serving as Head of Learning and Impact — trying to give maximum value to users, at a cheaper cost, in less time. Also experimenting, building, and trying to use AI for the best interest of the organisation.</p>
+
+  <p>The other serious occupation is reading, and getting lost in raw thoughts. Writing sometimes, speaking if invited. Curious about governance, the Indian Constitution, how ideas survive, and why most organisations look very different from the inside than they do from the outside.</p>
+
+  <p style="color:var(--ink3);font-style:italic;font-size:14.5px;border-left:2px solid var(--rule2);padding-left:1rem;margin-top:1.2rem;">This site is where I think in public. And as someone said — <em style="color:var(--accent);">"Do not seek me in my words; I am hidden within my thoughts."</em></p>
+
+  <hr>
+  <div class="label"><span class="dot"></span> Currently reading</div>
+  <div id="home-reading"><div class="loading">Loading...</div></div>
+
+  <div style="margin-top:1.4rem;">
+    <div class="label"><span class="dot"></span> Current projects</div>
+    <div id="home-projects"><div class="loading">Loading...</div></div>
+  </div>
+
+  <hr>
+  <div class="label"><span class="dot"></span> Favourite quotes</div>
+  <div id="home-quotes"><div class="loading">Loading...</div></div>
+
+  <hr>
+  <div class="social-row">
+    <a href="https://www.linkedin.com/in/aswinkr/" target="_blank">LinkedIn</a>
+    <a onclick="show('garden')" style="cursor:pointer;">Garden</a>
+    <a onclick="show('books')" style="cursor:pointer;">Books 2026</a>
+    <a href="mailto:hello@aswinkr.in">Email</a>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="writing">
+  <h2>Writing</h2>
+  <p style="font-size:13.5px;color:var(--ink3);margin-bottom:1.5rem;font-weight:300;">Published on LinkedIn. Click any title to read.</p>
+  <div id="writing-list"><div class="loading">Loading...</div></div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>Projects</h2>
+  <p style="font-size:13.5px;color:var(--ink3);margin-bottom:1.5rem;font-weight:300;">Things I'm working on — personal and professional.</p>
+  <div id="projects-list"><div class="loading">Loading...</div></div>
+</section>
+
+<!-- GARDEN -->
+<section id="garden">
+  <h2>Garden</h2>
+  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.8rem;font-weight:300;">Notes that aren't finished. Ideas being turned over. Connected to Notion — coming soon.</p>
+  <div id="garden-list"><div class="loading">Loading...</div></div>
+  <p style="font-size:12px;color:var(--ink3);font-style:italic;margin-top:1.8rem;font-weight:300;">This garden grows in public, slowly, and never quite finishes.</p>
+</section>
+
+<!-- BOOKS -->
+<section id="books">
+  <h2>Books 2026</h2>
+  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.5rem;font-weight:300;">What I'm reading. Notes where a book left a mark.</p>
+  <div class="label"><span class="dot"></span> Currently reading</div>
+  <div id="books-reading" style="margin-bottom:1.8rem;"><div class="loading">Loading...</div></div>
+  <div class="label"><span class="dot"></span> Read this year</div>
+  <div id="books-list"><div class="loading">Loading...</div></div>
+</section>
+
+<!-- QUOTES -->
+<section id="quotes">
+  <h2>Quotes</h2>
+  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.8rem;font-weight:300;">Lines that stopped me. Kept here so I don't lose them.</p>
+  <div id="quotes-list"><div class="loading">Loading...</div></div>
+</section>
+
+<!-- NOW -->
+<section id="now">
+  <h2>Now</h2>
+  <p style="font-size:12.5px;color:var(--ink3);font-style:italic;margin-bottom:2rem;font-weight:300;">Updated April 2026 — Ernakulam, Kerala</p>
+  <div class="nsec"><h3>Work</h3><p>Head of Learning and Impact at Entri — making learning faster, cheaper, and more effective for people who need it most. Building AI-powered systems into the core of how learning is delivered.</p></div>
+  <div class="nsec"><h3>Reading</h3><p>Austin's <em>The Indian Constitution</em> — slowly, with notes. Rereading Ambedkar's Constituent Assembly speeches alongside it.</p></div>
+  <div class="nsec"><h3>Thinking about</h3><p>Purpose. What it looks like at 33 when you've been heads-down building something for years. Whether the thing you've built reflects who you are — or who you were.</p></div>
+  <div class="nsec"><h3>Listening</h3><p>Carnatic classical in the mornings. Hindustani in the evenings when the reading is going well.</p></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About</h2>
+  <p>33 years old. From Kerala. Still trying to figure out life and purpose — and increasingly okay with the fact that the trying might be the point.</p>
+  <hr>
+  <div class="label"><span class="dot"></span> The journey</div>
+  <div class="jblock"><span class="jyear">The beginning</span><p>A Zoology degree. Which turned out to be better preparation for thinking about complex systems than I expected at the time. You study organisms that survive without a plan, and something about that stays with you.</p></div>
+  <div class="jblock"><span class="jyear">IIM Visakhapatnam</span><p>Management school gave me vocabulary for things I'd been doing by instinct. The more useful outcome: learning to sit in a room of very different people and figure out what actually needs to be said.</p></div>
+  <div class="jblock"><span class="jyear">Entri — from the start</span><p>Joined when the company was a small, uncertain idea. Stayed through every phase — the chaos, the growth, the hard decisions. Cross-functional work across strategy, business, marketing, operations, and product. Currently Head of Learning and Impact. The title changed. The work never really stopped.</p></div>
+  <div class="jblock"><span class="jyear">Now</span><p>Still building. Reading more than ever. Writing when something is worth saying. Trying to figure out what comes next — without being in a hurry about it.</p></div>
+  <hr>
+  <div class="social-row">
+    <a href="https://www.linkedin.com/in/aswinkr/" target="_blank">LinkedIn</a>
+    <a href="mailto:hello@aswinkr.in">Email</a>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ─── CONFIGURATION ─────────────────────────────────────────
+// 1. Paste your Google Sheet ID below (between the quotes)
+// 2. Save this file
+// 3. Done — site updates whenever you update the sheet
+const SHEET_ID = '1S6jrUCmZfjlu-2NtVqQnVhseyd9fhQYqDfG2n-Dllbo';
+// ───────────────────────────────────────────────────────────
+
+const BASE = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=`;
+
+async function parseSheet(sheet) {
+  try {
+    const r = await fetch(BASE + encodeURIComponent(sheet));
+    const txt = await r.text();
+    const json = JSON.parse(txt.replace(/^[^(]+\(|\);?$/g, ''));
+    const cols = json.table.cols.map(c => c.label.toLowerCase().trim());
+    return json.table.rows.map(row => {
+      const obj = {};
+      row.c.forEach((cell, i) => { if (cols[i]) obj[cols[i]] = cell ? (cell.v ?? '') : ''; });
+      return obj;
+    }).filter(r => Object.values(r).some(v => v !== ''));
+  } catch (e) { return []; }
+}
+
+async function init() {
+  if (SHEET_ID === '1S6jrUCmZfjlu-2NtVqQnVhseyd9fhQYqDfG2n-Dllbo') { renderAll(DEMO); return; }
+  const [reading, projects, quotes, writings, books, garden] =
+    await Promise.all(['reading','projects','quotes','writings','books','garden'].map(parseSheet));
+  const DATA = { reading, projects, quotes, writings, books, garden };
+  const hasData = Object.values(DATA).some(a => a.length > 0);
+  renderAll(hasData ? DATA : DEMO);
+}
+
+function isPersonal(type) { return (type || '').toLowerCase().includes('personal'); }
+
+function renderHomeReading(d) {
+  const el = document.getElementById('home-reading');
+  const items = (d.reading || []).slice(0, 2);
+  el.innerHTML = items.length
+    ? items.map(b => `<div class="card"><div class="c-row"><div class="spine"></div><div><div class="c-title">${b.title||''}</div><div class="c-sub">${b.author||''}</div><div class="progress">${b.progress||'In progress'}</div></div></div></div>`).join('')
+    : '<p class="loading">—</p>';
+}
+
+function renderHomeProjects(d) {
+  const el = document.getElementById('home-projects');
+  const items = (d.projects || []).filter(p => (p.status||'').toLowerCase().includes('active')).slice(0, 3);
+  el.innerHTML = items.length
+    ? items.map(p => `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem"><div class="c-title">${p.title||''}</div><span class="tag ${isPersonal(p.type)?'p':'pr'}">${p.type||''}</span></div><div class="c-note">${p.description||''}</div></div>`).join('')
+    : '<p class="loading">—</p>';
+}
+
+function renderHomeQuotes(d) {
+  const el = document.getElementById('home-quotes');
+  const items = (d.quotes || []).filter(q => (q.featured||'').toLowerCase() === 'yes').slice(0, 3);
+  el.innerHTML = items.length
+    ? items.map(q => `<div class="q-item"><div class="q-text">"${q.text||''}"</div>${q.author ? `<div class="q-attr">— ${q.author}</div>` : ''}</div>`).join('')
+    : '<p class="loading">—</p>';
+}
+
+function renderWriting(d) {
+  const el = document.getElementById('writing-list');
+  const items = d.writings || [];
+  el.innerHTML = items.length
+    ? `<ul class="wlist">${items.map(w =>
+        `<li><div class="w-wrap"><div class="w-title" onclick="window.open('${w.url||'#'}','_blank')">${w.title||''} <span style="font-size:10px;color:var(--ink3)">↗</span></div><div class="w-desc">${w.description||''}</div><span class="tag ${isPersonal(w.type)?'p':'pr'}">${w.type||''}</span></div><span class="w-date">${w.date||''}</span></li>`
+      ).join('')}</ul>`
+    : '<p class="loading">No posts yet.</p>';
+}
+
+function renderProjects(d) {
+  const el = document.getElementById('projects-list');
+  const active = (d.projects||[]).filter(p => (p.status||'').toLowerCase().includes('active'));
+  const past = (d.projects||[]).filter(p => !(p.status||'').toLowerCase().includes('active'));
+  const card = p => `<div class="card"><div style="display:flex;justify-content:space-between;gap:.5rem;margin-bottom:4px"><div class="c-title">${p.title||''}</div><span class="tag ${isPersonal(p.type)?'p':'pr'}">${p.type||''}</span></div><div class="c-note">${p.description||''}</div></div>`;
+  let html = active.map(card).join('');
+  if (past.length) html += `<div class="label" style="margin-top:1.5rem"><span class="dot"></span> Past</div>` + past.map(card).join('');
+  el.innerHTML = html || '<p class="loading">No projects yet.</p>';
+}
+
+function renderGarden(d) {
+  const el = document.getElementById('garden-list');
+  const items = d.garden || [];
+  el.innerHTML = items.length
+    ? items.map(g => `<div class="gnote"><div class="g-dom">${g.domain||''}</div><div class="g-title">${g.title||''}</div><div class="g-body">${g.body||''}</div></div>`).join('')
+    : '<p class="loading">Nothing planted yet.</p>';
+}
+
+function renderBooks(d) {
+  const rEl = document.getElementById('books-reading');
+  rEl.innerHTML = (d.reading||[]).length
+    ? (d.reading||[]).map(b => `<div class="card"><div class="c-row"><div class="spine"></div><div><div class="c-title">${b.title||''}</div><div class="c-sub">${b.author||''}</div><div class="progress">${b.progress||'In progress'}</div></div></div></div>`).join('')
+    : '<p class="loading">—</p>';
+  const bEl = document.getElementById('books-list');
+  const books = (d.books||[]).filter(b => (b.status||'').toLowerCase().includes('read'));
+  bEl.innerHTML = books.length
+    ? books.map(b => `<div class="bentry"><div><div class="b-title">${b.title||''}</div><div class="b-author">${b.author||''}</div>${b.note?`<div class="b-note">${b.note}</div>`:''}<span class="b-cat">${b.category||''}</span></div><div class="b-stars">${b.stars||''}</div></div>`).join('')
+    : '<p class="loading">No books logged yet.</p>';
+}
+
+function renderQuotes(d) {
+  const el = document.getElementById('quotes-list');
+  const items = d.quotes || [];
+  el.innerHTML = items.length
+    ? items.map(q => `<div class="q-item"><div class="q-text">"${q.text||''}"</div>${q.author?`<div class="q-attr">— ${q.author}</div>`:''}</div>`).join('')
+    : '<p class="loading">No quotes yet.</p>';
+}
+
+function renderAll(d) {
+  renderHomeReading(d); renderHomeProjects(d); renderHomeQuotes(d);
+  renderWriting(d); renderProjects(d); renderGarden(d); renderBooks(d); renderQuotes(d);
+}
+
+function show(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('act'));
+  const el = document.getElementById(id);
+  const tab = document.getElementById('t-' + id);
+  if (el) el.classList.add('active');
+  if (tab) tab.classList.add('act');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Fallback demo data shown when Sheet ID not yet set
+const DEMO = {
+  reading: [{ title: 'The Indian Constitution: Cornerstone of a Nation', author: 'Granville Austin', progress: 'Halfway through · reading slowly' }],
+  projects: [
+    { title: 'Head of Learning and Impact — Entri', description: 'Building AI-powered learning systems. Making education faster, cheaper, and more effective for millions of users.', type: 'Professional', status: 'Active' },
+    { title: 'This website', description: 'A personal corner of the internet. Digital garden, reading log, notes. Thinking in public.', type: 'Personal', status: 'Active' }
+  ],
+  quotes: [
+    { text: 'Do not seek me in my words; I am hidden within my thoughts.', author: '', featured: 'yes' },
+    { text: 'The Constitution is not a mere lawyers\u2019 document, it is a vehicle of Life, and its spirit is always the spirit of Age.', author: 'B. R. Ambedkar', featured: 'yes' },
+    { text: 'Not all those who wander are lost.', author: 'J. R. R. Tolkien', featured: 'yes' }
+  ],
+  writings: [
+    { title: 'The sentence that does not perform', description: 'Professional prose has become a costume. On what honest writing actually costs.', date: 'Mar 2026', type: 'Personal', url: 'https://www.linkedin.com/in/aswinkr/' },
+    { title: 'What the Basic Structure Doctrine actually protects', description: 'Kesavananda Bharati, the unamendable core, and why this 1973 judgment still unsettles Parliament.', date: 'Feb 2026', type: 'Professional', url: 'https://www.linkedin.com/in/aswinkr/' },
+    { title: 'Zero to one — and everything after', description: 'What building a company from its earliest days actually teaches.', date: 'Jan 2026', type: 'Professional', url: 'https://www.linkedin.com/in/aswinkr/' }
+  ],
+  books: [
+    { title: 'Annihilation of Caste', author: 'B. R. Ambedkar', stars: '★★★★★', note: 'A speech that was never delivered. Reads differently once you\'ve spent time with the Constitution he drafted.', category: 'Politics · Law', status: 'read' },
+    { title: 'The Remains of the Day', author: 'Kazuo Ishiguro', stars: '★★★★★', note: 'About dignity, self-deception, and the cost of misplaced loyalty.', category: 'Fiction', status: 'read' },
+    { title: 'Poor Economics', author: 'Banerjee & Duflo', stars: '★★★★', note: 'Changed how I think about designing for users who are not like me.', category: 'Economics', status: 'read' },
+    { title: 'High Output Management', author: 'Andrew Grove', stars: '★★★★', note: 'Unglamorous and exact. No patience for vagueness.', category: 'Business', status: 'read' }
+  ],
+  garden: [
+    { domain: 'Organisation Building', title: 'What early-stage really means — and why most people get it wrong', body: 'Being there at the start is not about energy or hustle. It is about making decisions with almost no information, in almost no time, with consequences that compound for years.' },
+    { domain: 'AI & Learning', title: 'What happens when AI becomes the teacher', body: 'The real question isn\'t whether AI can teach. It\'s whether the student is still the point.' },
+    { domain: 'Life & Purpose', title: 'On being 33 and not having all the answers', body: 'At some point you stop expecting clarity to arrive. The question is whether you\'re pointed in a direction that feels honest. That\'s enough for now.' },
+    { domain: 'Constitutional Law', title: 'The Basic Structure Doctrine as constitutional immune system', body: 'Kesavananda Bharati (1973) invented a doctrine that appears nowhere in the text it protects. That is either audacious or brilliant. Probably both.' }
+  ]
+};
+
+show('home');
+init();
+</script>
+</body>
+</html>
