@@ -1,392 +1,842 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aswin K R</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#111;--bg2:#1a1a1a;--bg3:#222;
-  --ink:#f0f0f0;--ink2:#a8a8a8;--ink3:#555;
-  --accent:#e8e0d0;--accent2:#c4a882;
-  --rule:rgba(255,255,255,0.07);--rule2:rgba(255,255,255,0.14);
-}
-html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased;
-}
-nav{
-  max-width:680px;margin:0 auto;padding:2rem 1.5rem 0;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-}
-.logo{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:14px;font-weight:500;color:var(--accent);cursor:pointer;flex-shrink:0;}
-.nav-links{list-style:none;display:flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;}
-.nav-links a{font-size:12px;color:var(--ink3);text-decoration:none;cursor:pointer;padding:3px 9px;border-radius:20px;transition:color 0.15s,background 0.15s;}
-.nav-links a:hover,.nav-links a.act{color:var(--ink);background:var(--bg3);}
-main{max-width:680px;margin:0 auto;padding:0 1.5rem 6rem;}
-section{display:none;padding-top:3rem;}
-section.active{display:block;}
-h1{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:2rem;font-weight:500;color:var(--ink);letter-spacing:-0.02em;line-height:1.15;margin-bottom:0.15rem;}
-h2{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;font-size:1.3rem;font-weight:500;color:var(--ink);letter-spacing:-0.01em;margin-bottom:1.5rem;}
-p{color:var(--ink2);margin-bottom:1rem;font-weight:300;font-size:15.5px;}
-p:last-child{margin-bottom:0;}
-em{color:var(--accent);font-style:italic;}
-hr{border:none;border-top:1px solid var(--rule);margin:1.8rem 0;}
-a{color:var(--accent2);text-decoration:none;transition:color 0.15s;}
-a:hover{color:var(--ink);}
-.label{font-size:10.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;font-weight:500;}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--accent2);flex-shrink:0;display:inline-block;}
-/* HERO */
-.hero-tagline{font-size:14px;color:var(--ink3);font-weight:300;margin-bottom:1.5rem;}
-.hero-photo{width:100%;border-radius:10px;overflow:hidden;margin-bottom:1.6rem;background:var(--bg2);aspect-ratio:4/3;}
-.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.2rem;margin-bottom:0.7rem;transition:border-color 0.15s;}
-.card:hover{border-color:var(--rule2);}
-.c-title{font-size:14.5px;color:var(--ink);font-weight:400;line-height:1.35;margin-bottom:2px;}
-.c-sub{font-size:12.5px;color:var(--ink3);font-weight:300;}
-.c-note{font-size:13px;color:var(--ink3);margin-top:6px;line-height:1.6;font-weight:300;}
-.c-row{display:flex;gap:0.8rem;align-items:flex-start;}
-.spine{width:3px;border-radius:2px;background:var(--accent2);align-self:stretch;min-height:34px;flex-shrink:0;}
-.progress{font-size:11.5px;color:var(--accent2);margin-top:5px;font-weight:400;}
-.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid var(--rule2);color:var(--ink3);margin-right:4px;margin-top:4px;letter-spacing:0.04em;}
-.tag.p{color:#c4a882;border-color:rgba(196,168,130,0.3);}
-.tag.pr{color:#82b4c4;border-color:rgba(130,180,196,0.3);}
-/* WRITING */
-.wlist{list-style:none;}
-.wlist li{padding:0.75rem 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
-.wlist li:first-child{border-top:1px solid var(--rule);}
-.w-wrap{flex:1;}
-.w-title{font-size:14.5px;color:var(--ink);line-height:1.4;font-weight:400;cursor:pointer;transition:color 0.15s;}
-.w-title:hover{color:var(--accent2);}
-.w-desc{font-size:12px;color:var(--ink3);margin-top:2px;font-weight:300;line-height:1.5;}
-.w-date{font-size:11.5px;color:var(--ink3);white-space:nowrap;flex-shrink:0;font-weight:300;padding-top:3px;}
-/* QUOTES */
-.q-item{padding:1rem 0;border-bottom:1px solid var(--rule);}
-.q-item:first-child{border-top:1px solid var(--rule);}
-.q-text{font-size:15.5px;color:var(--ink);font-style:italic;font-weight:300;line-height:1.6;margin-bottom:0.3rem;}
-.q-attr{font-size:11.5px;color:var(--ink3);letter-spacing:0.05em;}
-/* BOOKS */
-.bentry{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:0.4rem 1rem;align-items:start;}
-.bentry:first-of-type{border-top:1px solid var(--rule);}
-.b-title{font-size:14.5px;color:var(--ink);font-style:italic;line-height:1.35;font-weight:400;}
-.b-author{font-size:12px;color:var(--ink3);margin-top:2px;font-weight:300;}
-.b-note{font-size:13px;color:var(--ink3);margin-top:5px;line-height:1.6;grid-column:1/-1;font-weight:300;}
-.b-stars{font-size:11px;color:var(--accent2);white-space:nowrap;padding-top:3px;}
-.b-cat{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-top:3px;display:block;grid-column:1/-1;font-weight:400;}
-/* GARDEN */
-.gnote{padding:1.1rem 0;border-bottom:1px solid var(--rule);}
-.gnote:first-of-type{border-top:1px solid var(--rule);}
-.g-dom{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.3rem;font-weight:500;}
-.g-title{font-size:15px;color:var(--ink);line-height:1.4;margin-bottom:0.3rem;font-weight:400;}
-.g-body{font-size:13.5px;color:var(--ink3);line-height:1.65;font-weight:300;}
-/* NOW */
-.nsec{margin-bottom:1.8rem;}
-.nsec h3{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.5rem;font-weight:500;}
-/* ABOUT */
-.jblock{margin-bottom:1.8rem;}
-.jyear{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);font-weight:500;margin-bottom:0.4rem;display:block;}
-.jblock p{font-size:15px;color:var(--ink2);font-weight:300;line-height:1.8;}
-.social-row{display:flex;gap:1.2rem;flex-wrap:wrap;}
-.social-row a{font-size:13px;color:var(--ink3);font-weight:300;transition:color 0.15s;}
-.social-row a:hover{color:var(--ink);}
-.loading{font-size:13px;color:var(--ink3);padding:0.5rem 0;font-weight:300;}
-blockquote{border-left:2px solid var(--rule2);padding:0.3rem 0 0.3rem 1rem;margin:1.5rem 0;font-style:italic;color:var(--ink3);font-size:14.5px;font-weight:300;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aswin K R</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --bg:        #111111;
+      --bg-card:   #191919;
+      --bg-raised: #222222;
+      --accent:    #c4a882;
+      --text:      #e8e8e8;
+      --text-2:    #888888;
+      --text-3:    #4a4a4a;
+      --border:    rgba(255,255,255,0.07);
+      --border-2:  rgba(255,255,255,0.12);
+      --font:      -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      --max:       720px;
+      --r:         10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(17,17,17,0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 11px 20px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 5px 15px;
+      border-radius: 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: color 0.18s, background 0.18s;
+      letter-spacing: 0.01em;
+    }
+    .tab:hover { color: var(--text); background: var(--bg-raised); }
+    .tab.on    { background: var(--accent); color: #111111; font-weight: 600; }
+
+    /* ── MAIN ────────────────────────────────────────────── */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 40px 20px 90px;
+    }
+
+    .page         { display: none; }
+    .page.on      { display: block; }
+
+    /* ── LOADING DOTS ────────────────────────────────────── */
+    .dots-loader { padding: 18px 0; display: flex; gap: 6px; align-items: center; }
+    .d {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); opacity: 0.3;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    .d:nth-child(2) { animation-delay: 0.2s; }
+    .d:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1)} }
+
+    /* ── HOME HEADER ─────────────────────────────────────── */
+    .home-name    { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 5px; }
+    .home-tagline { font-size: 15px; color: var(--text-2); font-style: italic; margin-bottom: 32px; }
+
+    /* ── SLIDESHOW ───────────────────────────────────────── */
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.85s ease;
+    }
+    .slide.on { opacity: 1; }
+
+    .slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .slide.cover   img { object-position: center center; }
+    .slide.portrait img { object-position: center top; }
+
+    .slide-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+    .sdot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+    .sdot.on { background: var(--accent); transform: scale(1.25); }
+
+    /* ── BIO ─────────────────────────────────────────────── */
+    .bio { margin-bottom: 48px; }
+    .bio p {
+      color: #cacaca;
+      font-size: 15.5px;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    .bio p:last-child { margin-bottom: 0; }
+    .bio a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196,168,130,0.3);
+      transition: border-color 0.2s;
+    }
+    .bio a:hover { border-bottom-color: var(--accent); }
+
+    /* ── SECTION ─────────────────────────────────────────── */
+    .sec       { margin-bottom: 48px; }
+    .sec-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    /* ── READING ITEMS ───────────────────────────────────── */
+    .reading-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px 15px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 10px;
+    }
+    .reading-item:last-child { margin-bottom: 0; }
+    .spine {
+      width: 4px; border-radius: 2px;
+      background: #f59e0b;
+      flex-shrink: 0;
+      align-self: stretch;
+      min-height: 36px;
+    }
+    .spine.accent { background: var(--accent); }
+    .r-info  { flex: 1; min-width: 0; }
+    .r-title { font-size: 14.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .r-auth  { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+    .r-prog  { font-size: 12px; color: var(--accent); flex-shrink: 0; }
+
+    /* ── CARD (projects) ─────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px 16px;
+      margin-bottom: 10px;
+    }
+    .card:last-child { margin-bottom: 0; }
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .card-title { font-size: 15px; font-weight: 500; }
+    .card-desc  { font-size: 13.5px; color: var(--text-2); line-height: 1.65; }
+
+    /* ── TAGS ────────────────────────────────────────────── */
+    .tag {
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 2px 9px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .tag-p  { background: rgba(196,168,130,0.14); color: var(--accent); }
+    .tag-pr { background: rgba(100,160,210,0.14); color: #8ab4d4; }
+
+    /* ── QUOTES (home) ───────────────────────────────────── */
+    .qhome-item {
+      border-left: 2px solid var(--accent);
+      padding-left: 18px;
+      margin-bottom: 22px;
+    }
+    .qhome-item:last-child { margin-bottom: 0; }
+    .qhome-text   { font-size: 15px; font-style: italic; color: #c8c8c8; line-height: 1.75; }
+    .qhome-author { font-size: 13px; color: var(--text-2); margin-top: 7px; }
+
+    /* ── SOCIAL ──────────────────────────────────────────── */
+    .social { display: flex; gap: 18px; flex-wrap: wrap; }
+    .slink {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(196,168,130,0.28);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .slink:hover { border-bottom-color: var(--accent); }
+
+    /* ── PAGE TITLE ──────────────────────────────────────── */
+    .pg-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; letter-spacing: -0.01em; }
+
+    /* ── WRITING ─────────────────────────────────────────── */
+    .writing-note { font-size: 13px; color: var(--text-2); font-style: italic; margin-bottom: 28px; }
+    .witem {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+    }
+    .witem:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .witem-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .wtitle-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 15.5px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .wtitle-link:hover { color: var(--accent); }
+    .wtitle-nolink { font-size: 15.5px; font-weight: 500; color: var(--text); }
+    .wdate { font-size: 13px; color: var(--text-2); margin-bottom: 5px; }
+    .wdesc { font-size: 13.5px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── PROJECTS PAGE ───────────────────────────────────── */
+    .psec-head {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .psec-block { margin-bottom: 40px; }
+
+    /* ── GARDEN ──────────────────────────────────────────── */
+    .gitem {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+      margin-bottom: 32px;
+    }
+    .gitem:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .gdomain {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .gtitle { font-size: 18px; font-weight: 500; margin-bottom: 12px; }
+    .gbody  { font-size: 15px; color: #c8c8c8; line-height: 1.8; white-space: pre-line; }
+    .garden-footer {
+      margin-top: 48px;
+      font-size: 13px;
+      color: var(--text-3);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ── BOOKS ───────────────────────────────────────────── */
+    .books-h    { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 32px; }
+    .bsec-block { margin-bottom: 40px; }
+    .bcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 15px;
+      display: flex;
+      gap: 13px;
+      margin-bottom: 10px;
+    }
+    .bcard:last-child { margin-bottom: 0; }
+    .bspine { width: 4px; border-radius: 2px; flex-shrink: 0; align-self: stretch; min-height: 36px; }
+    .binfo    { flex: 1; min-width: 0; }
+    .btitle   { font-size: 14.5px; font-weight: 500; margin-bottom: 2px; }
+    .bauthor  { font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
+    .bmeta    { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .bstars   { color: #f59e0b; font-size: 13px; letter-spacing: 1px; }
+    .bcat     { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); color: var(--text-2); }
+    .bprog    { font-size: 12px; color: var(--accent); }
+    .bnote    { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.55; margin-top: 7px; }
+
+    /* ── QUOTES PAGE ─────────────────────────────────────── */
+    .qpage-item  { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 32px; }
+    .qpage-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .qpage-text  { font-size: 17.5px; font-style: italic; color: #c8c8c8; line-height: 1.85; margin-bottom: 12px; }
+    .qpage-auth  { font-size: 14px; color: var(--text-2); }
+
+    /* ── ABOUT PAGE ──────────────────────────────────────── */
+    .about-opener {
+      font-size: 16.5px;
+      color: #cacaca;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .chapter      { margin-bottom: 34px; }
+    .chapter-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .chapter-body { font-size: 15px; color: #cacaca; line-height: 1.8; }
+
+    .about-foot {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── EMPTY STATE ─────────────────────────────────────── */
+    .empty { font-size: 14px; color: var(--text-3); font-style: italic; padding: 8px 0; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 600px) {
+      nav .nav-inner { padding: 9px 14px; }
+      main  { padding: 28px 16px 70px; }
+      .home-name { font-size: 22px; }
+      .slideshow { height: 280px; }
+      .qpage-text { font-size: 15.5px; }
+      .about-opener { font-size: 15px; }
+      .gtitle { font-size: 16px; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- ── NAV ──────────────────────────────────────────────────────────────────── -->
 <nav>
-  <span class="logo" onclick="show('home')">Aswin K R</span>
-  <ul class="nav-links">
-    <li><a onclick="show('home')" id="t-home">Home</a></li>
-    <li><a onclick="show('writing')" id="t-writing">Writing</a></li>
-    <li><a onclick="show('projects')" id="t-projects">Projects</a></li>
-    <li><a onclick="show('garden')" id="t-garden">Garden</a></li>
-    <li><a onclick="show('books')" id="t-books">Books</a></li>
-    <li><a onclick="show('quotes')" id="t-quotes">Quotes</a></li>
-
-    <li><a onclick="show('about')" id="t-about">About</a></li>
-  </ul>
+  <div class="nav-inner">
+    <button class="tab on"  data-p="home">Home</button>
+    <button class="tab"     data-p="writing">Writing</button>
+    <button class="tab"     data-p="projects">Projects</button>
+    <button class="tab"     data-p="garden">Garden</button>
+    <button class="tab"     data-p="books">Books</button>
+    <button class="tab"     data-p="quotes">Quotes</button>
+    <button class="tab"     data-p="about">About</button>
+  </div>
 </nav>
 
 <main>
 
-<!-- HOME -->
-<section id="home" class="active">
-  <h1>Aswin K R</h1>
-  <p class="hero-tagline">a 33 year old, still trying to figure out life and purpose</p>
+  <!-- ── HOME ─────────────────────────────────────────────────────────────── -->
+  <section class="page on" id="p-home">
 
-  <div class="hero-photo">
-    <!-- REPLACE src below with your hosted photo URL, e.g. src="https://yoursite.com/photo.jpg" -->
-    <img src="https://raw.githubusercontent.com/KRIPS1/webpage-Personal/main/photo.jpg" alt="Aswin K R"
-      onerror="this.parentElement.style.background='#1a1a1a';this.style.display='none'" />
-  </div>
+    <h1 class="home-name">Aswin K R</h1>
+    <p class="home-tagline">a 33 year old, still trying to figure out life and purpose</p>
 
-  <p>Eight years at <a href="https://entri.app" target="_blank">Entri</a> — joined as a Team Lead when the company was still figuring out what it was, stayed through every stage that followed. The work has been cross-functional the whole way: revenue, strategy, marketing, operations, product, and now learning impact. Currently leading the department asking how you deliver maximum learning value to a user — in their own language, in less time, at lower cost — for 15 million learners across vernacular India.</p>
+    <!-- SLIDESHOW -->
+    <div class="slideshow" id="slideshow">
+      <div class="slide cover on" id="sl-0">
+        <img src="cover.jpg" alt="Cover photo" draggable="false">
+      </div>
+      <div class="slide portrait" id="sl-1">
+        <img src="profile.jpg" alt="Profile photo" draggable="false">
+      </div>
+      <div class="slide-dots">
+        <button class="sdot on" data-s="0" aria-label="Slide 1"></button>
+        <button class="sdot"    data-s="1" aria-label="Slide 2"></button>
+      </div>
+    </div>
 
-  <p>Before Entri: taught UPSC subjects at coaching institutes, co-founded a learning space in Ernakulam that was part bookshop, part café, part thinking room, and spent nearly two years at Accenture in Bengaluru. Each chapter taught something different about how people learn and how organisations actually work.</p>
+    <!-- BIO -->
+    <div class="bio">
+      <p>Eight years at <a href="https://entri.app" target="_blank" rel="noopener">Entri</a> — joined as a Team Lead when the company was still figuring out what it was, stayed through every stage that followed. The work has been cross-functional the whole way: revenue, strategy, marketing, operations, product, and now learning impact. Currently leading the department asking how you deliver maximum learning value to a user — in their own language, in less time, at lower cost — for 15 million learners across vernacular India.</p>
+      <p>Before Entri: taught UPSC subjects at coaching institutes, co-founded a learning space in Ernakulam that was part bookshop, part café, part thinking room, and spent nearly two years at Accenture in Bengaluru.</p>
+      <p>The other serious occupation is reading. Also thinking about platform economics, language as infrastructure, EdTech, governance, and the Indian Constitution. Writing occasionally. Speaking when invited.</p>
+      <p>This site is where I think in public. And as someone said — <em>"Do not seek me in my words; I am hidden within my thoughts."</em></p>
+    </div>
 
-  <p>The other serious occupation is reading. Also thinking about platform economics, language as infrastructure, EdTech, governance, and the Indian Constitution. Writing occasionally. Speaking when invited.</p>
+    <!-- CURRENTLY READING -->
+    <div class="sec">
+      <div class="sec-label">Currently Reading</div>
+      <div id="h-reading"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+    </div>
 
-  <p style="color:var(--ink3);font-style:italic;font-size:14.5px;border-left:2px solid var(--rule2);padding-left:1rem;margin-top:1.2rem;">This site is where I think in public. And as someone said — <em style="color:var(--accent);">"Do not seek me in my words; I am hidden within my thoughts."</em></p>
+    <!-- CURRENT PROJECTS -->
+    <div class="sec">
+      <div class="sec-label">Current Projects</div>
+      <div id="h-projects"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+    </div>
 
-  <hr>
-  <div class="label"><span class="dot"></span> Currently reading</div>
-  <div id="home-reading"><div class="loading">Loading...</div></div>
+    <!-- FAVOURITE QUOTES -->
+    <div class="sec">
+      <div class="sec-label">Favourite Quotes</div>
+      <div id="h-quotes"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+    </div>
 
-  <div style="margin-top:1.4rem;">
-    <div class="label"><span class="dot"></span> Current projects</div>
-    <div id="home-projects"><div class="loading">Loading...</div></div>
-  </div>
+    <!-- SOCIAL -->
+    <div class="sec">
+      <div class="social">
+        <a class="slink" href="https://www.linkedin.com/in/aswinkr/" target="_blank" rel="noopener">↗ LinkedIn</a>
+        <a class="slink" href="mailto:hello@aswinkr.in">✉ hello@aswinkr.in</a>
+      </div>
+    </div>
 
-  <hr>
-  <div class="label"><span class="dot"></span> Favourite quotes</div>
-  <div id="home-quotes"><div class="loading">Loading...</div></div>
+  </section>
 
-  <hr>
-  <div class="social-row">
-    <a href="https://www.linkedin.com/in/aswinkr/" target="_blank">LinkedIn</a>
-    <a onclick="show('garden')" style="cursor:pointer;">Garden</a>
-    <a onclick="show('books')" style="cursor:pointer;">Books 2026</a>
-    <a href="mailto:hello@aswinkr.in">Email</a>
-  </div>
-</section>
+  <!-- ── WRITING ───────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-writing">
+    <h2 class="pg-title">Writing</h2>
+    <p class="writing-note">Published on LinkedIn. Click any title to read.</p>
+    <div id="w-list"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+  </section>
 
-<!-- WRITING -->
-<section id="writing">
-  <h2>Writing</h2>
-  <p style="font-size:13.5px;color:var(--ink3);margin-bottom:1.5rem;font-weight:300;">Published on LinkedIn. Click any title to read.</p>
-  <div id="writing-list"><div class="loading">Loading...</div></div>
-</section>
+  <!-- ── PROJECTS ──────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-projects">
+    <h2 class="pg-title">Projects</h2>
+    <div id="proj-content"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+  </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <h2>Projects</h2>
-  <p style="font-size:13.5px;color:var(--ink3);margin-bottom:1.5rem;font-weight:300;">Things I'm working on — personal and professional.</p>
-  <div id="projects-list"><div class="loading">Loading...</div></div>
-</section>
+  <!-- ── GARDEN ────────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-garden">
+    <h2 class="pg-title">Garden</h2>
+    <div id="garden-list"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+    <p class="garden-footer">This garden grows in public, slowly, and never quite finishes.</p>
+  </section>
 
-<!-- GARDEN -->
-<section id="garden">
-  <h2>Garden</h2>
-  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.8rem;font-weight:300;">Notes that aren't finished. Ideas being turned over. Connected to Notion — coming soon.</p>
-  <div id="garden-list"><div class="loading">Loading...</div></div>
-  <p style="font-size:12px;color:var(--ink3);font-style:italic;margin-top:1.8rem;font-weight:300;">This garden grows in public, slowly, and never quite finishes.</p>
-</section>
+  <!-- ── BOOKS ─────────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-books">
+    <h2 class="books-h">Books 2026</h2>
+    <div id="books-content"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+  </section>
 
-<!-- BOOKS -->
-<section id="books">
-  <h2>Books 2026</h2>
-  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.5rem;font-weight:300;">What I'm reading. Notes where a book left a mark.</p>
-  <div class="label"><span class="dot"></span> Currently reading</div>
-  <div id="books-reading" style="margin-bottom:1.8rem;"><div class="loading">Loading...</div></div>
-  <div class="label"><span class="dot"></span> Read this year</div>
-  <div id="books-list"><div class="loading">Loading...</div></div>
-</section>
+  <!-- ── QUOTES ────────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-quotes">
+    <h2 class="pg-title">Quotes</h2>
+    <div id="q-list"><div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div></div>
+  </section>
 
-<!-- QUOTES -->
-<section id="quotes">
-  <h2>Quotes</h2>
-  <p style="color:var(--ink3);font-size:13.5px;margin-bottom:1.8rem;font-weight:300;">Lines that stopped me. Kept here so I don't lose them.</p>
-  <div id="quotes-list"><div class="loading">Loading...</div></div>
-</section>
+  <!-- ── ABOUT ─────────────────────────────────────────────────────────────── -->
+  <section class="page" id="p-about">
+    <h2 class="pg-title">About</h2>
+    <p class="about-opener">33. From Kerala. Cross-functional leader, EdTech builder, reader of too many things. Still figuring out what all of it adds up to — and mostly okay with that.</p>
 
+    <div class="chapter">
+      <div class="chapter-head">Before Everything</div>
+      <p class="chapter-body">Started at Accenture as an Associate Software Engineer in Bengaluru — a brief but useful education in how large organisations actually function versus how they think they function.</p>
+    </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <h2>About</h2>
-  <p>33. From Kerala. Cross-functional leader, EdTech builder, reader of too many things. Still figuring out what all of it adds up to — and mostly okay with that.</p>
-  <hr>
-  <div class="label"><span class="dot"></span> The journey</div>
+    <div class="chapter">
+      <div class="chapter-head">Teaching &amp; Co-Founding — 2016 to 2019</div>
+      <p class="chapter-body">Spent three years teaching GK and current affairs to UPSC aspirants at Naipunya IAS Academy and Career Launcher. Alongside that, co-founded Insight Learning Habitat in Ernakulam — part bookshop, part café, part thinking room for students, scholars, and teachers.</p>
+    </div>
 
-  <div class="jblock">
-    <span class="jyear">Before everything</span>
-    <p>Started at Accenture as an Associate Software Engineer in Bengaluru — a brief but useful education in how large organisations actually function versus how they think they function. Left after less than two years with a clearer sense of what I didn't want, which turned out to be more valuable than it sounds.</p>
-  </div>
+    <div class="chapter">
+      <div class="chapter-head">Entri — 8 Years and Counting</div>
+      <p class="chapter-body">Joined Entri in 2018 as a Team Lead. Stayed through every stage — building Entri TV, moving into strategy and business development, P&amp;L ownership, and eventually leading Learning and Impact. Eight years of zero-to-one and everything after.</p>
+    </div>
 
-  <div class="jblock">
-    <span class="jyear">Teaching & co-founding — 2016 to 2019</span>
-    <p>Spent three years teaching GK and current affairs to UPSC aspirants at institutes like Naipunya IAS Academy and Career Launcher. Alongside that, co-founded Insight Learning Habitat in Ernakulam — a space that was part bookshop, part café, part thinking room, built for students, scholars, and teachers who needed somewhere to think. That experiment lasted nearly two years and taught me more about learning, community, and what people actually need from an education environment than anything else has since.</p>
-  </div>
+    <div class="chapter">
+      <div class="chapter-head">What I'm Working On Now</div>
+      <p class="chapter-body">How to deliver maximum learning value to a user, in the least time, at the lowest cost — in their own language. Entri serves 15 million learners across vernacular India. AI is changing what's possible and I'm figuring out what that means in practice.</p>
+    </div>
 
-  <div class="jblock">
-    <span class="jyear">Entri — 8 years and counting</span>
-    <p>Joined Entri in 2018 as a Team Lead when the company was still finding its shape. Stayed through every stage — building Entri TV, moving into strategy and business development, taking on P&L ownership, and eventually leading the Learning and Impact function. The work has never fit neatly into one title. Cross-functional is the honest description: whatever the company needed at each stage, that's what the role became. Eight years of zero-to-one and everything after.</p>
-  </div>
+    <div class="chapter">
+      <div class="chapter-head">Education, Ongoing</div>
+      <p class="chapter-body">Executive Certificate in Business Analytics from IIM Visakhapatnam. Currently pursuing MBA from BITS Pilani — Work Integrated Learning Programme, Strategy and Consulting. Both alongside full-time work.</p>
+    </div>
 
-  <div class="jblock">
-    <span class="jyear">What I'm working on now</span>
-    <p>Currently focused on the hardest question in EdTech: how do you deliver maximum learning value to a user, in the least time, at the lowest cost — in their own language? Entri serves 15 million learners across vernacular India. The gap between what people need and what the system gives them is still enormous. AI is changing what's possible here, and I'm trying to figure out what that actually means in practice, not in theory.</p>
-  </div>
+    <div class="chapter">
+      <div class="chapter-head">Outside of Work</div>
+      <p class="chapter-body">I read seriously — history, governance, EdTech, fiction, economics, the Indian Constitution. I write when something is worth saying. Still working out the larger questions.</p>
+    </div>
 
-  <div class="jblock">
-    <span class="jyear">Education, ongoing</span>
-    <p>Executive Certificate in Business Analytics and Data-Driven Decision Making from IIM Visakhapatnam. Currently pursuing an MBA from BITS Pilani — Work Integrated Learning Programme, Strategy and Consulting track. Both done alongside full-time work, which is either a sign of ambition or poor time management. Probably both.</p>
-  </div>
-
-  <div class="jblock">
-    <span class="jyear">Outside of work</span>
-    <p>I read seriously — history, governance, EdTech, fiction, economics, the Indian Constitution. I write when something is worth saying. I think about platform economics, language as infrastructure, and why motivation matters more than content in adult learning. I speak when invited. I'm still working out the larger questions.</p>
-  </div>
-
-  <hr>
-  <div class="social-row">
-    <a href="https://www.linkedin.com/in/aswinkr/" target="_blank">LinkedIn</a>
-    <a href="mailto:hello@aswinkr.in">Email</a>
-  </div>
-</section>
+    <div class="about-foot">
+      <div class="social">
+        <a class="slink" href="https://www.linkedin.com/in/aswinkr/" target="_blank" rel="noopener">↗ LinkedIn</a>
+        <a class="slink" href="mailto:hello@aswinkr.in">✉ hello@aswinkr.in</a>
+      </div>
+    </div>
+  </section>
 
 </main>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQIjayFMV8ie1mnCBX7dYMPU1t7V_Y7Z94A8RpAXHOcudnNIiTSTOx95mllmn1_rOZmw/exec';
+// ── NAVIGATION ──────────────────────────────────────────────────────────────
+(function () {
+  const tabs  = document.querySelectorAll('.tab');
+  const pages = document.querySelectorAll('.page');
 
-async function parseSheet(sheet) {
-  try {
-    const r = await fetch(`${SCRIPT_URL}?sheet=${encodeURIComponent(sheet)}`);
-    const data = await r.json();
-    return Array.isArray(data) ? data : [];
-  } catch (e) { return []; }
+  function show(id) {
+    tabs.forEach(t  => t.classList.remove('on'));
+    pages.forEach(p => p.classList.remove('on'));
+    const t = document.querySelector(`.tab[data-p="${id}"]`);
+    const p = document.getElementById(`p-${id}`);
+    if (t) t.classList.add('on');
+    if (p) p.classList.add('on');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.p)));
+})();
+
+// ── SLIDESHOW ────────────────────────────────────────────────────────────────
+(function () {
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.sdot');
+  const ss     = document.getElementById('slideshow');
+  let cur = 0, timer;
+
+  function go(n) {
+    slides[cur].classList.remove('on');
+    dots[cur].classList.remove('on');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('on');
+    dots[cur].classList.add('on');
+  }
+
+  function start() { timer = setInterval(() => go(cur + 1), 4000); }
+  function stop()  { clearInterval(timer); }
+
+  dots.forEach(d => d.addEventListener('click', e => {
+    e.stopPropagation();
+    stop(); go(+d.dataset.s); start();
+  }));
+
+  ss.addEventListener('mouseenter', stop);
+  ss.addEventListener('mouseleave', start);
+  start();
+})();
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function x(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-async function init() {
-  try {
-    const [reading, projects, quotes, writings, books, garden] =
-      await Promise.all(['reading','projects','quotes','writings','books','garden'].map(parseSheet));
-    const DATA = { reading, projects, quotes, writings, books, garden };
-    const hasData = Object.values(DATA).some(a => a.length > 0);
-    renderAll(hasData ? DATA : DEMO);
-  } catch(e) {
+function stars(n) {
+  const v = Math.min(5, Math.max(0, parseInt(n) || 0));
+  return '★'.repeat(v) + '☆'.repeat(5 - v);
+}
+
+function typeTag(t) {
+  const low = String(t || '').toLowerCase();
+  if (low === 'personal')     return `<span class="tag tag-p">Personal</span>`;
+  if (low === 'professional') return `<span class="tag tag-pr">Professional</span>`;
+  if (t) return `<span class="tag tag-p">${x(t)}</span>`;
+  return '';
+}
+
+function loader() {
+  return '<div class="dots-loader"><div class="d"></div><div class="d"></div><div class="d"></div></div>';
+}
+
+// ── DEMO / FALLBACK DATA ──────────────────────────────────────────────────────
+const DEMO = {
+  reading: [
+    { title: 'The Anarchy', author: 'William Dalrymple', progress: '62%' },
+    { title: 'Working in Public', author: 'Nadia Eghbal', progress: '40%' },
+  ],
+  projects: [
+    { title: 'Personal Website', description: 'Building this site as a public thinking space — a place to write and curate.', type: 'Personal', status: 'Active' },
+    { title: 'Learning Impact Framework', description: 'Defining what maximum learning value means in practice for vernacular India.', type: 'Professional', status: 'Active' },
+    { title: 'Insight Learning Habitat', description: 'Co-founded a bookshop, café, and thinking room in Ernakulam.', type: 'Personal', status: 'Past' },
+  ],
+  quotes: [
+    { text: 'Do not seek me in my words; I am hidden within my thoughts.', author: 'Unknown', featured: 'yes' },
+    { text: 'The reading of all good books is like conversation with the finest minds of past centuries.', author: 'René Descartes', featured: 'yes' },
+    { text: "An organisation's ability to learn, and translate that learning into action rapidly, is the ultimate competitive advantage.", author: 'Jack Welch', featured: 'yes' },
+  ],
+  writings: [
+    { title: 'On Platform Economics in Education', description: 'How network effects play out differently when the product is learning.', date: '2024-11-01', type: 'Professional', url: '' },
+    { title: 'What I Learned Teaching UPSC', description: 'Three years at the whiteboard changed how I think about knowledge transfer.', date: '2024-06-15', type: 'Personal', url: '' },
+  ],
+  books: [
+    { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman', stars: 5, note: 'Essential. Changed how I think about decisions.', category: 'Psychology', status: 'read' },
+    { title: "The Innovator's Dilemma", author: 'Clayton Christensen', stars: 4, note: 'Core text for anyone building in fast-moving markets.', category: 'Business', status: 'read' },
+  ],
+  garden: [
+    { domain: 'EdTech', title: 'Why Vernacular Matters', body: 'Language is not just a medium of instruction — it is the substrate of thought. Building in English for India is building for 3%. The other 97% think, dream, and learn in languages we have largely ignored.' },
+    { domain: 'Platform Economics', title: 'Network Effects in Learning', body: 'Most EdTech companies mistake content delivery for learning. The real network effect in education is when learners help each other — cohort learning, peer explanation, community accountability.' },
+  ],
+};
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function renderHomeReading(data) {
+  const el = document.getElementById('h-reading');
+  if (!data.length) { el.innerHTML = '<p class="empty">Nothing here yet.</p>'; return; }
+  el.innerHTML = data.map(b => `
+    <div class="reading-item">
+      <div class="spine"></div>
+      <div class="r-info">
+        <div class="r-title">${x(b.title)}</div>
+        <div class="r-auth">${x(b.author)}</div>
+      </div>
+      ${b.progress ? `<div class="r-prog">${x(b.progress)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderHomeProjects(data) {
+  const el = document.getElementById('h-projects');
+  const active = data.filter(p => String(p.status||'').toLowerCase() === 'active');
+  if (!active.length) { el.innerHTML = '<p class="empty">Nothing active right now.</p>'; return; }
+  el.innerHTML = active.map(p => `
+    <div class="card">
+      <div class="card-head"><div class="card-title">${x(p.title)}</div>${typeTag(p.type)}</div>
+      <div class="card-desc">${x(p.description)}</div>
+    </div>
+  `).join('');
+}
+
+function renderHomeQuotes(data) {
+  const el = document.getElementById('h-quotes');
+  const featured = data.filter(q => String(q.featured||'').toLowerCase() === 'yes').slice(0, 3);
+  if (!featured.length) { el.innerHTML = '<p class="empty">Nothing here yet.</p>'; return; }
+  el.innerHTML = featured.map(q => `
+    <div class="qhome-item">
+      <div class="qhome-text">"${x(q.text)}"</div>
+      <div class="qhome-author">— ${x(q.author)}</div>
+    </div>
+  `).join('');
+}
+
+function renderWriting(data) {
+  const el = document.getElementById('w-list');
+  if (!data.length) { el.innerHTML = '<p class="empty">Nothing published yet.</p>'; return; }
+  el.innerHTML = data.map(w => {
+    const hasUrl = w.url && String(w.url).trim() && String(w.url).trim() !== '#';
+    const titleEl = hasUrl
+      ? `<a class="wtitle-link" href="${x(w.url)}" target="_blank" rel="noopener">${x(w.title)} ↗</a>`
+      : `<span class="wtitle-nolink">${x(w.title)}</span>`;
+    return `
+      <div class="witem">
+        <div class="witem-head">${titleEl}${typeTag(w.type)}</div>
+        ${w.date ? `<div class="wdate">${x(w.date)}</div>` : ''}
+        ${w.description ? `<div class="wdesc">${x(w.description)}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderProjects(data) {
+  const el = document.getElementById('proj-content');
+  const active = data.filter(p => String(p.status||'').toLowerCase() === 'active');
+  const past   = data.filter(p => String(p.status||'').toLowerCase() !== 'active');
+  let html = '';
+
+  function block(label, items) {
+    if (!items.length) return '';
+    return `
+      <div class="psec-block">
+        <div class="psec-head">${label}</div>
+        ${items.map(p => `
+          <div class="card">
+            <div class="card-head"><div class="card-title">${x(p.title)}</div>${typeTag(p.type)}</div>
+            <div class="card-desc">${x(p.description)}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  html = block('Active', active) + block('Past', past);
+  el.innerHTML = html || '<p class="empty">No projects yet.</p>';
+}
+
+function renderGarden(data) {
+  const el = document.getElementById('garden-list');
+  if (!data.length) { el.innerHTML = '<p class="empty">The garden is just a seed right now.</p>'; return; }
+  el.innerHTML = data.map(g => `
+    <div class="gitem">
+      <div class="gdomain">${x(g.domain)}</div>
+      <div class="gtitle">${x(g.title)}</div>
+      <div class="gbody">${x(g.body)}</div>
+    </div>
+  `).join('');
+}
+
+function renderBooks(reading, books) {
+  const el = document.getElementById('books-content');
+  let html = '';
+
+  if (reading.length) {
+    html += `
+      <div class="bsec-block">
+        <div class="sec-label">Currently Reading</div>
+        ${reading.map(b => `
+          <div class="bcard">
+            <div class="bspine" style="background:#f59e0b"></div>
+            <div class="binfo">
+              <div class="btitle">${x(b.title)}</div>
+              <div class="bauthor">${x(b.author)}</div>
+              ${b.progress ? `<div class="bmeta"><span class="bprog">${x(b.progress)}</span></div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  const read = books.filter(b => String(b.status||'').toLowerCase() === 'read');
+  if (read.length) {
+    html += `
+      <div class="bsec-block">
+        <div class="sec-label">Read This Year</div>
+        ${read.map(b => `
+          <div class="bcard">
+            <div class="bspine" style="background:var(--accent)"></div>
+            <div class="binfo">
+              <div class="btitle">${x(b.title)}</div>
+              <div class="bauthor">${x(b.author)}</div>
+              <div class="bmeta">
+                ${b.stars ? `<span class="bstars">${stars(b.stars)}</span>` : ''}
+                ${b.category ? `<span class="bcat">${x(b.category)}</span>` : ''}
+              </div>
+              ${b.note ? `<div class="bnote">${x(b.note)}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  el.innerHTML = html || '<p class="empty">No books recorded yet.</p>';
+}
+
+function renderQuotes(data) {
+  const el = document.getElementById('q-list');
+  if (!data.length) { el.innerHTML = '<p class="empty">No quotes yet.</p>'; return; }
+  el.innerHTML = data.map(q => `
+    <div class="qpage-item">
+      <div class="qpage-text">"${x(q.text)}"</div>
+      <div class="qpage-auth">— ${x(q.author)}</div>
+    </div>
+  `).join('');
+}
+
+function renderAll(d) {
+  renderHomeReading(d.reading);
+  renderHomeProjects(d.projects);
+  renderHomeQuotes(d.quotes);
+  renderWriting(d.writings);
+  renderProjects(d.projects);
+  renderGarden(d.garden);
+  renderBooks(d.reading, d.books);
+  renderQuotes(d.quotes);
+}
+
+// ── LOAD XLSX ─────────────────────────────────────────────────────────────────
+function sheet(wb, name) {
+  const s = wb.Sheets[name];
+  if (!s) return [];
+  return XLSX.utils.sheet_to_json(s, { defval: '' });
+}
+
+async function loadData() {
+  // Try data.xlsx first, then fallback filenames for convenience
+  const candidates = ['data.xlsx', 'Perosonal Site.xlsx', 'Personal Site.xlsx'];
+  let loaded = false;
+
+  for (const fname of candidates) {
+    try {
+      const res = await fetch(fname);
+      if (!res.ok) continue;
+      const buf = await res.arrayBuffer();
+      const wb  = XLSX.read(buf, { type: 'array' });
+      renderAll({
+        reading:  sheet(wb, 'reading'),
+        projects: sheet(wb, 'projects'),
+        quotes:   sheet(wb, 'quotes'),
+        writings: sheet(wb, 'writings'),
+        books:    sheet(wb, 'books'),
+        garden:   sheet(wb, 'garden'),
+      });
+      loaded = true;
+      break;
+    } catch (_) { /* try next */ }
+  }
+
+  if (!loaded) {
+    console.warn('data.xlsx not found — showing demo content.');
     renderAll(DEMO);
   }
 }
 
-function isPersonal(type) { return (type || '').toLowerCase().includes('personal'); }
-
-function renderHomeReading(d) {
-  const el = document.getElementById('home-reading');
-  const items = (d.reading || []).slice(0, 2);
-  el.innerHTML = items.length
-    ? items.map(b => `<div class="card"><div class="c-row"><div class="spine"></div><div><div class="c-title">${b.title||''}</div><div class="c-sub">${b.author||''}</div><div class="progress">${b.progress||'In progress'}</div></div></div></div>`).join('')
-    : '<p class="loading">—</p>';
-}
-
-function renderHomeProjects(d) {
-  const el = document.getElementById('home-projects');
-  const items = (d.projects || []).filter(p => (p.status||'').toLowerCase().includes('active')).slice(0, 3);
-  el.innerHTML = items.length
-    ? items.map(p => `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem"><div class="c-title">${p.title||''}</div><span class="tag ${isPersonal(p.type)?'p':'pr'}">${p.type||''}</span></div><div class="c-note">${p.description||''}</div></div>`).join('')
-    : '<p class="loading">—</p>';
-}
-
-function renderHomeQuotes(d) {
-  const el = document.getElementById('home-quotes');
-  const items = (d.quotes || []).filter(q => (q.featured||'').toLowerCase() === 'yes').slice(0, 3);
-  el.innerHTML = items.length
-    ? items.map(q => `<div class="q-item"><div class="q-text">"${q.text||''}"</div>${q.author ? `<div class="q-attr">— ${q.author}</div>` : ''}</div>`).join('')
-    : '<p class="loading">—</p>';
-}
-
-function renderWriting(d) {
-  const el = document.getElementById('writing-list');
-  const items = d.writings || [];
-  el.innerHTML = items.length
-    ? `<ul class="wlist">${items.map(w =>
-        `<li><div class="w-wrap"><div class="w-title" onclick="window.open('${w.url||'#'}','_blank')">${w.title||''} <span style="font-size:10px;color:var(--ink3)">↗</span></div><div class="w-desc">${w.description||''}</div><span class="tag ${isPersonal(w.type)?'p':'pr'}">${w.type||''}</span></div><span class="w-date">${w.date||''}</span></li>`
-      ).join('')}</ul>`
-    : '<p class="loading">No posts yet.</p>';
-}
-
-function renderProjects(d) {
-  const el = document.getElementById('projects-list');
-  const active = (d.projects||[]).filter(p => (p.status||'').toLowerCase().includes('active'));
-  const past = (d.projects||[]).filter(p => !(p.status||'').toLowerCase().includes('active'));
-  const card = p => `<div class="card"><div style="display:flex;justify-content:space-between;gap:.5rem;margin-bottom:4px"><div class="c-title">${p.title||''}</div><span class="tag ${isPersonal(p.type)?'p':'pr'}">${p.type||''}</span></div><div class="c-note">${p.description||''}</div></div>`;
-  let html = active.map(card).join('');
-  if (past.length) html += `<div class="label" style="margin-top:1.5rem"><span class="dot"></span> Past</div>` + past.map(card).join('');
-  el.innerHTML = html || '<p class="loading">No projects yet.</p>';
-}
-
-function renderGarden(d) {
-  const el = document.getElementById('garden-list');
-  const items = d.garden || [];
-  el.innerHTML = items.length
-    ? items.map(g => `<div class="gnote"><div class="g-dom">${g.domain||''}</div><div class="g-title">${g.title||''}</div><div class="g-body">${g.body||''}</div></div>`).join('')
-    : '<p class="loading">Nothing planted yet.</p>';
-}
-
-function renderBooks(d) {
-  const rEl = document.getElementById('books-reading');
-  rEl.innerHTML = (d.reading||[]).length
-    ? (d.reading||[]).map(b => `<div class="card"><div class="c-row"><div class="spine"></div><div><div class="c-title">${b.title||''}</div><div class="c-sub">${b.author||''}</div><div class="progress">${b.progress||'In progress'}</div></div></div></div>`).join('')
-    : '<p class="loading">—</p>';
-  const bEl = document.getElementById('books-list');
-  const books = (d.books||[]).filter(b => (b.status||'').toLowerCase().includes('read'));
-  bEl.innerHTML = books.length
-    ? books.map(b => `<div class="bentry"><div><div class="b-title">${b.title||''}</div><div class="b-author">${b.author||''}</div>${b.note?`<div class="b-note">${b.note}</div>`:''}<span class="b-cat">${b.category||''}</span></div><div class="b-stars">${b.stars||''}</div></div>`).join('')
-    : '<p class="loading">No books logged yet.</p>';
-}
-
-function renderQuotes(d) {
-  const el = document.getElementById('quotes-list');
-  const items = d.quotes || [];
-  el.innerHTML = items.length
-    ? items.map(q => `<div class="q-item"><div class="q-text">"${q.text||''}"</div>${q.author?`<div class="q-attr">— ${q.author}</div>`:''}</div>`).join('')
-    : '<p class="loading">No quotes yet.</p>';
-}
-
-function renderAll(d) {
-  renderHomeReading(d); renderHomeProjects(d); renderHomeQuotes(d);
-  renderWriting(d); renderProjects(d); renderGarden(d); renderBooks(d); renderQuotes(d);
-}
-
-function show(id) {
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('act'));
-  const el = document.getElementById(id);
-  const tab = document.getElementById('t-' + id);
-  if (el) el.classList.add('active');
-  if (tab) tab.classList.add('act');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Fallback demo data shown when Sheet ID not yet set
-const DEMO = {
-  reading: [{ title: 'The Indian Constitution: Cornerstone of a Nation', author: 'Granville Austin', progress: 'Halfway through · reading slowly' }],
-  projects: [
-    { title: 'Head of Learning and Impact — Entri', description: 'Building AI-powered learning systems. Making education faster, cheaper, and more effective for millions of users.', type: 'Professional', status: 'Active' },
-    { title: 'This website', description: 'A personal corner of the internet. Digital garden, reading log, notes. Thinking in public.', type: 'Personal', status: 'Active' }
-  ],
-  quotes: [
-    { text: 'Do not seek me in my words; I am hidden within my thoughts.', author: '', featured: 'yes' },
-    { text: 'The Constitution is not a mere lawyers\u2019 document, it is a vehicle of Life, and its spirit is always the spirit of Age.', author: 'B. R. Ambedkar', featured: 'yes' },
-    { text: 'Not all those who wander are lost.', author: 'J. R. R. Tolkien', featured: 'yes' }
-  ],
-  writings: [
-    { title: 'The sentence that does not perform', description: 'Professional prose has become a costume. On what honest writing actually costs.', date: 'Mar 2026', type: 'Personal', url: 'https://www.linkedin.com/in/aswinkr/' },
-    { title: 'What the Basic Structure Doctrine actually protects', description: 'Kesavananda Bharati, the unamendable core, and why this 1973 judgment still unsettles Parliament.', date: 'Feb 2026', type: 'Professional', url: 'https://www.linkedin.com/in/aswinkr/' },
-    { title: 'Zero to one — and everything after', description: 'What building a company from its earliest days actually teaches.', date: 'Jan 2026', type: 'Professional', url: 'https://www.linkedin.com/in/aswinkr/' }
-  ],
-  books: [
-    { title: 'Annihilation of Caste', author: 'B. R. Ambedkar', stars: '★★★★★', note: 'A speech that was never delivered. Reads differently once you\'ve spent time with the Constitution he drafted.', category: 'Politics · Law', status: 'read' },
-    { title: 'The Remains of the Day', author: 'Kazuo Ishiguro', stars: '★★★★★', note: 'About dignity, self-deception, and the cost of misplaced loyalty.', category: 'Fiction', status: 'read' },
-    { title: 'Poor Economics', author: 'Banerjee & Duflo', stars: '★★★★', note: 'Changed how I think about designing for users who are not like me.', category: 'Economics', status: 'read' },
-    { title: 'High Output Management', author: 'Andrew Grove', stars: '★★★★', note: 'Unglamorous and exact. No patience for vagueness.', category: 'Business', status: 'read' }
-  ],
-  garden: [
-    { domain: 'Organisation Building', title: 'What early-stage really means — and why most people get it wrong', body: 'Being there at the start is not about energy or hustle. It is about making decisions with almost no information, in almost no time, with consequences that compound for years.' },
-    { domain: 'AI & Learning', title: 'What happens when AI becomes the teacher', body: 'The real question isn\'t whether AI can teach. It\'s whether the student is still the point.' },
-    { domain: 'Life & Purpose', title: 'On being 33 and not having all the answers', body: 'At some point you stop expecting clarity to arrive. The question is whether you\'re pointed in a direction that feels honest. That\'s enough for now.' },
-    { domain: 'Constitutional Law', title: 'The Basic Structure Doctrine as constitutional immune system', body: 'Kesavananda Bharati (1973) invented a doctrine that appears nowhere in the text it protects. That is either audacious or brilliant. Probably both.' }
-  ]
-};
-
-show('home');
-init();
+loadData();
 </script>
 </body>
 </html>
